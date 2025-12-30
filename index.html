@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy New Year Mannu ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+:root {
+  --romantic-red: #d42426;
+  --rose-gold: #e5b3a3;
+  --bg-dark: #0a0404;
+}
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+.star {
+  position: fixed; width: 2px; height: 2px;
+  background: #fff; border-radius: 50%;
+  opacity: 0.3; pointer-events: none;
+}
+
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10; padding: 20px; text-align: center;
+}
+.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
+
+h2.frame-heading {
+  color: var(--rose-gold); margin-bottom: 30px; font-weight: 300;
+  letter-spacing: 1px; max-width: 80%; line-height: 1.4;
+}
+
+/* --- STAGE 1: TIMER --- */
+.timer-box {
+  width: 180px; height: 180px; background: rgba(20, 5, 5, 0.5);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative; border: 1px solid #4a1011;
+}
+svg { transform: rotate(-90deg); }
+#progress-bar { 
+  stroke: var(--romantic-red); stroke-width: 6; 
+  stroke-dasharray: 502; stroke-dashoffset: 502; 
+  transition: 2.5s linear; 
+  filter: drop-shadow(0 0 10px var(--romantic-red));
+}
+.timer-box span { position: absolute; color: white; font-weight: bold; letter-spacing: 2px; }
+
+/* --- STAGE 2: ROMANTIC CARDS --- */
+.search-container { position: relative; width: 350px; height: 350px; display: flex; justify-content: center; align-items: center; }
+.gift-img { 
+    width: 170px; border-radius: 25px; 
+    box-shadow: 0 0 30px var(--romantic-red); 
+    cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
+}
+
+.wish-card {
+  position: absolute; width: 280px; height: 150px;
+  background: rgba(40, 10, 10, 0.85); backdrop-filter: blur(15px);
+  border: 1px solid rgba(229, 179, 163, 0.2); border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff; cursor: pointer; transition: 0.5s;
+}
+.wish-card:hover { border-color: var(--rose-gold); box-shadow: 0 0 25px var(--romantic-red); }
+.wish-card.exit { transform: translateY(-150%) scale(0.5); opacity: 0; }
+
+/* --- STAGE 3: PHOTO STACK --- */
+.stack { position: relative; width: 300px; height: 420px; }
+.img-card {
+  position: absolute; inset: 0; background: #000;
+  border-radius: 15px; padding: 10px; border: 1px solid #331111;
+  cursor: pointer; transition: 0.6s ease;
+}
+.img-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+.img-card.swipe { transform: translate(150%, 20%) rotate(25deg); opacity: 0; pointer-events: none; }
+
+/* --- TRANSITION --- */
+#transition-line { display: none; z-index: 100; }
+#transition-line h2 { color: var(--rose-gold); font-size: 1.8rem; font-style: italic; letter-spacing: 1px; }
+
+/* --- STAGE 4: FINAL (ROMANTIC GLOW) --- */
+#final { background: var(--bg-dark); display: none; }
+
+@keyframes heartGlow {
+  from { text-shadow: 0 0 10px var(--romantic-red), 0 0 20px var(--romantic-red); }
+  to { text-shadow: 0 0 30px var(--romantic-red), 0 0 50px #ff0000, 0 0 70px #990000; }
+}
+
+.letter h1 { 
+  font-size: 3rem; 
+  color: var(--rose-gold); 
+  animation: heartGlow 1.5s ease-in-out infinite alternate;
+}
+.letter p { 
+  color: #ffcccc; 
+  font-size: 1.2rem; 
+  max-width: 500px; 
+  margin-top: 20px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div id="stage1" class="screen">
+  <h2 class="frame-heading">Mannu, a small world of us awaits... <br>Just tap to enter ❤️</h2>
+  <div class="timer-box" onclick="runTimer()">
+    <svg width="180" height="180"><circle cx="90" cy="90" r="80" stroke="#331111" fill="none"/><circle id="progress-bar" cx="90" cy="90" r="80" fill="none"/></svg>
+    <span id="btnText">UNLOCK LOVE</span>
+  </div>
+</div>
+
+<div id="stage2" class="screen hidden">
+  <h2 class="frame-heading">Every card here is a promise for our 2026... move them for a surprise 🥺</h2>
+  <div class="search-container">
+    <img src="gift.webp" class="gift-img" id="mainGift" onclick="openGift()">
+    <div class="wish" style="top: -10%; left: 10%;">💍 Forever Together</div>
+    <div class="wish" style="top: 15%; left: 5%;">🧸 Countless Hugs</div>
+    <div class="wish" style="top: 70%; left: 5%;">🌙 Late Night Talks</div>
+    <div class="wish" style="top: 45%; left: 15%;">🥂 To Us</div>
+  </div>
+</div>
+
+<div id="stage3" class="screen hidden">
+  <h2 class="frame-heading">Our Favorite Moments</h2>
+  <div class="stack">
+    <div id="pic3" class="img-card" style="transform: rotate(-8deg); z-index: 1; display: none;"><img src="pic3.jpeg"></div>
+    <div id="pic2" class="img-card" style="transform: rotate(6deg); z-index: 2;"><img src="pic2.jpeg"></div>
+    <div id="pic1" class="img-card" style="transform: rotate(-3deg); z-index: 3;"><img src="pic1.jpeg"></div>
+  </div>
+</div>
+
+<div id="transition-line" class="screen">
+  <h2>"One day we will have our own little world... I promise."</h2>
+</div>
+
+<div id="final" class="screen">
+  <div class="letter">
+    <h1>HAPPY 2026, MANNU! ❤️</h1>
+    <p>Being with you is my favorite place to be. As we step into another year, my only goal is to make you the happiest person alive. Thank you for choosing me every single day.</p>
+    <br>
+    <h1>I Love You More Than Ever 💋</h1>
+    <p style="font-weight: bold; font-size: 1.6rem; color: var(--rose-gold); margin-top: 30px;">Forever & Always ❤️</p>
+  </div>
+</div>
+
+<script>
+for (let i = 0; i < 60; i++) {
+  let star = document.createElement('div');
+  star.className = 'star';
+  star.style.top = Math.random() * 100 + 'vh';
+  star.style.left = Math.random() * 100 + 'vw';
+  document.body.appendChild(star);
+}
+
+function bigSplash() {
+  confetti({
+    particleCount: 250,
+    spread: 100,
+    startVelocity: 50,
+    origin: { y: 0.6 },
+    colors: ['#d42426', '#ffffff', '#e5b3a3', '#ff0000'],
+    gravity: 0.8,
+    ticks: 300
+  });
+}
+
+function runTimer() {
+  document.getElementById('progress-bar').style.strokeDashoffset = 0;
+  setTimeout(() => {
+    document.getElementById('stage1').classList.add('hidden');
+    document.getElementById('stage2').classList.remove('hidden');
+  }, 2600);
+}
+
+let wishesRemoved = 0;
+const wishesArr = document.querySelectorAll('.wish');
+wishesArr.forEach((w, i) => {
+  w.className = 'wish-card';
+  w.style.zIndex = 50 - i;
+  w.onclick = (e) => { e.stopPropagation(); w.classList.add('exit'); wishesRemoved++; };
+});
+
+function openGift() {
+  if (wishesRemoved < wishesArr.length) return alert("Clear the wishes first, Mannu! ❤️");
+  bigSplash();
+  setTimeout(() => {
+    document.getElementById('stage2').classList.add('hidden');
+    document.getElementById('stage3').classList.remove('hidden');
+  }, 600);
+}
+
+let photosSwiped = 0;
+const cards = [document.getElementById('pic1'), document.getElementById('pic2'), document.getElementById('pic3')];
+
+cards.forEach((card) => {
+  card.onclick = () => {
+    card.classList.add('swipe');
+    photosSwiped++;
+
+    if (photosSwiped === 2) {
+      setTimeout(() => {
+        document.getElementById('stage3').classList.add('hidden');
+        document.getElementById('transition-line').style.display = 'flex';
+        setTimeout(() => {
+          document.getElementById('transition-line').style.display = 'none';
+          document.getElementById('pic3').style.display = 'block';
+          document.getElementById('stage3').classList.remove('hidden');
+        }, 2500);
+      }, 600);
+    }
+
+    if (photosSwiped === 3) {
+      setTimeout(() => {
+        document.getElementById('stage3').classList.add('hidden');
+        bigSplash(); 
+        document.getElementById('final').style.display = 'flex';
+      }, 700);
+    }
+  };
+});
+</script>
+</body>
+</html>
