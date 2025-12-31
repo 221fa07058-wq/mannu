@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy New Year Mannu ❤️</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
@@ -16,7 +18,7 @@
 
 html, body {
   margin: 0; padding: 0; height: 100%;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Montserrat', sans-serif; /* Stylish modern body font */
   overflow: hidden;
   background: var(--bg-dark);
 }
@@ -37,8 +39,9 @@ html, body {
 .hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
 
 h2.frame-heading {
-  color: var(--rose-gold); margin-bottom: 30px; font-weight: 300;
-  letter-spacing: 1px; max-width: 80%; line-height: 1.4;
+  font-family: 'Dancing Script', cursive; /* Romantic heading */
+  color: var(--rose-gold); margin-bottom: 30px; font-weight: 700;
+  font-size: 2rem; letter-spacing: 1px; max-width: 80%; line-height: 1.4;
 }
 
 /* --- STAGE 1: TIMER --- */
@@ -54,7 +57,7 @@ svg { transform: rotate(-90deg); }
   transition: 2.5s linear; 
   filter: drop-shadow(0 0 10px var(--romantic-red));
 }
-.timer-box span { position: absolute; color: white; font-weight: bold; letter-spacing: 2px; }
+.timer-box span { position: absolute; color: white; font-weight: bold; letter-spacing: 2px; font-size: 0.8rem; }
 
 /* --- STAGE 2: ROMANTIC CARDS --- */
 .search-container { position: relative; width: 350px; height: 350px; display: flex; justify-content: center; align-items: center; }
@@ -70,6 +73,7 @@ svg { transform: rotate(-90deg); }
   border: 1px solid rgba(229, 179, 163, 0.2); border-radius: 20px;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.3rem; color: #fff; cursor: pointer; transition: 0.5s;
+  font-family: 'Dancing Script', cursive; /* Cards font */
 }
 .wish-card:hover { border-color: var(--rose-gold); box-shadow: 0 0 25px var(--romantic-red); }
 .wish-card.exit { transform: translateY(-150%) scale(0.5); opacity: 0; }
@@ -86,7 +90,7 @@ svg { transform: rotate(-90deg); }
 
 /* --- TRANSITION --- */
 #transition-line { display: none; z-index: 100; }
-#transition-line h2 { color: var(--rose-gold); font-size: 1.8rem; font-style: italic; letter-spacing: 1px; }
+#transition-line h2 { font-family: 'Dancing Script', cursive; color: var(--rose-gold); font-size: 2.2rem; font-style: italic; letter-spacing: 1px; }
 
 /* --- STAGE 4: FINAL (ROMANTIC GLOW) --- */
 #final { background: var(--bg-dark); display: none; }
@@ -97,16 +101,19 @@ svg { transform: rotate(-90deg); }
 }
 
 .letter h1 { 
-  font-size: 3rem; 
+  font-family: 'Dancing Script', cursive;
+  font-size: 3.5rem; 
   color: var(--rose-gold); 
   animation: heartGlow 1.5s ease-in-out infinite alternate;
 }
 .letter p { 
+  font-family: 'Montserrat', sans-serif;
   color: #ffcccc; 
-  font-size: 1.2rem; 
+  font-size: 1.1rem; 
   max-width: 500px; 
   margin-top: 20px;
-  line-height: 1.6;
+  line-height: 1.8;
+  font-weight: 300;
 }
 </style>
 </head>
@@ -146,11 +153,11 @@ svg { transform: rotate(-90deg); }
 
 <div id="final" class="screen">
   <div class="letter">
-    <h1>HAPPY 2026, MANNU! ❤️</h1>
+    <h1>Happy 2026, Mannu! ❤️</h1>
     <p>Being with you is my favorite place to be. As we step into another year, my only goal is to make you the happiest person alive. Thank you for choosing me every single day.</p>
     <br>
-    <h1>I Love You More Than Ever 💋</h1>
-    <p style="font-weight: bold; font-size: 1.6rem; color: var(--rose-gold); margin-top: 30px;">Forever & Always ❤️</p>
+    <h1 style="font-size: 2.5rem;">I Love You More Than Ever 💋</h1>
+    <p style="font-weight: 600; font-size: 1.4rem; color: var(--rose-gold); margin-top: 30px;">Forever & Always ❤️</p>
   </div>
 </div>
 
